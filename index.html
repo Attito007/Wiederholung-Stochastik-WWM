@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Wer wird Mathe-Millionär? · Stochastik · Klasse 10</title>
+<style>
+  :root{--bg:#080e20;--panel:#111a36;--panel2:#17234a;--line:#425285;--gold:#ffd88e;--white:#f7f8ff;--muted:#a7b5d5;--cyan:#7bddf1;--green:#65e7ac;--red:#ffa8a6;--radius:20px;--shadow:0 20px 60px #03071590}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;color:var(--white);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(ellipse 80% 65% at 38% 6%,#293a72 0,#101935 58%,#080e20 100%);}
+  body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:radial-gradient(#b4c5ff 0.75px,transparent .75px);background-size:24px 24px}
+  button{font:inherit;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
+  button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+  button:disabled{cursor:default;opacity:.48}
+  button:not(:disabled):active{transform:scale(.986)}
+  .shell{position:relative;max-width:1500px;min-height:100vh;margin:auto;padding:22px 24px 28px;display:flex;flex-direction:column;gap:18px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .branding{display:flex;align-items:center;gap:13px}
+  .emblem{width:49px;height:49px;border:2px solid #c3a46b;border-radius:16px;display:grid;place-items:center;transform:rotate(45deg);box-shadow:inset 0 0 16px #ffd88e22,0 0 20px #ffd88e21;background:#26335a}
+  .emblem span{transform:rotate(-45deg);font-size:23px;font-weight:900;color:var(--gold)}
+  .brandName{font-weight:850;letter-spacing:.06em;font-size:clamp(16px,2.2vw,24px);line-height:1.13}.brandSub{color:var(--muted);font-size:12px;letter-spacing:.06em;margin-top:4px;text-transform:uppercase}
+  .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .small-button{background:#1a274d;color:#e2ebff;border:1px solid #506493;border-radius:12px;padding:10px 13px;font-size:13px;font-weight:700}
+  .small-button:hover:not(:disabled){background:#304271}
+  .main{display:grid;grid-template-columns:minmax(0,1fr) 258px;gap:20px;flex:1;min-height:0}
+  .stage{min-width:0;display:flex;flex-direction:column;gap:16px}
+  .hero{min-height:140px;display:flex;justify-content:space-between;gap:14px;align-items:center;border-radius:var(--radius);border:1px solid #53689e;background:radial-gradient(circle at 88% 40%,#344881 0%,#1b2b5a 32%,#121d3d 70%);padding:21px 26px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+  .hero:after{content:"?";position:absolute;right:15%;top:-60px;font-size:240px;line-height:1;color:#fff;opacity:.055;font-weight:900;pointer-events:none}
+  .eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--cyan);font-weight:800}
+  h1,h2,p{margin:0}
+  h1{font-size:clamp(25px,3.2vw,42px);line-height:1.09;margin:9px 0 10px;max-width:690px}
+  .hero p{font-size:14px;color:#d0dcf8;line-height:1.5}
+  .status{min-width:145px;max-width:180px;text-align:right;position:relative;z-index:1}
+  .status-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+  .status-number{font-size:clamp(21px,2.7vw,32px);font-weight:900;color:var(--gold);margin:5px 0}
+  .status-secondary{font-size:12px;color:#d2dcf7}
+  .question-panel{background:linear-gradient(160deg,#15224a 0%,#101934 72%);border:1px solid #4a5c8c;border-radius:var(--radius);padding:clamp(18px,2.5vw,30px);box-shadow:var(--shadow);flex:1;display:flex;flex-direction:column;gap:19px;min-height:490px}
+  .panel-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .chip{padding:7px 12px;font-size:12px;font-weight:800;background:#294172;border:1px solid #5479a1;color:#c2effa;border-radius:100px;letter-spacing:.02em}
+  .step{font-size:12px;color:var(--muted);font-weight:750}
+  .question-text{font-size:clamp(19px,2.2vw,29px);font-weight:790;line-height:1.35;max-width:900px;letter-spacing:-.01em}
+  .scenario{font-size:clamp(13px,1.27vw,16px);color:#dce5fb;line-height:1.55;max-width:850px}
+  .tablebox{max-width:660px;width:100%;align-self:center;background:#eef4ff;color:#13213d;border-radius:13px;padding:10px 13px 13px;border:3px solid #c2d2ef;overflow:auto}
+  .table-title{color:#344c79;font-weight:850;letter-spacing:.02em;font-size:12px;text-transform:uppercase;margin:3px 4px 10px}
+  table.prob{border-collapse:collapse;width:100%;font-size:clamp(12px,1.27vw,15px);text-align:center;font-variant-numeric:tabular-nums}
+  .prob th,.prob td{border:1px solid #bbc8df;padding:7px 9px;white-space:nowrap}
+  .prob thead th,.prob .total{background:#dbe6fa;font-weight:850}.prob th:first-child{text-align:left}.prob td.inner{background:#fff;font-weight:730}
+  .answers{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:auto}
+  .answer{display:flex;align-items:center;gap:14px;min-height:78px;text-align:left;background:#1b2b56;color:#f8faff;border:2px solid #5a72af;border-radius:14px;padding:14px 16px;font-size:clamp(14px,1.5vw,19px);line-height:1.32;font-weight:720;position:relative}
+  .answer:hover:not(:disabled){border-color:#c1d4ff;background:#2a3f75}
+  .answer.selected{border-color:var(--gold);background:#54442e;box-shadow:inset 0 0 0 1px #ffd88e}
+  .answer.correct{border-color:var(--green);background:#174b42;color:#eafff3;opacity:1}
+  .answer.wrong{border-color:var(--red);background:#5a2637;color:#fff1f1;opacity:1}
+  .answer.hidden-answer{visibility:hidden}
+  .answer-letter{flex:none;color:var(--gold);font-size:16px;font-weight:950}
+  .answer.correct .answer-letter{color:#99ffd0}.answer.wrong .answer-letter{color:#ffd4d4}
+  .answer-content{min-width:0;overflow-wrap:anywhere}
+  .controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .controls-right{display:flex;gap:9px;flex-wrap:wrap;margin-left:auto}
+  .primary{padding:13px 21px;border:1px solid #ffe7ad;background:linear-gradient(130deg,#ffe0a0,#ecc179);color:#1a2344;border-radius:12px;font-weight:880;box-shadow:0 4px 16px #ffd88e32}
+  .primary:hover:not(:disabled){background:#ffe9bb}
+  .secondary{padding:12px 17px;border:1px solid #718ac0;background:#1b2b56;color:#f0f5ff;border-radius:12px;font-weight:750}
+  .secondary:hover:not(:disabled){background:#334b7c}
+  .feedback{border-radius:15px;padding:17px 19px;border:1px solid #57719a;background:#1c3053;line-height:1.54}
+  .feedback.good{border-color:#397f72;background:#173c3b}.feedback.bad{border-color:#bd6f75;background:#483042}
+  .feedback h2{font-size:18px;margin-bottom:7px}.feedback p{font-size:15px;color:#f2f4ff}
+  .feedback .solution{font-weight:750;display:block;margin-top:7px}
+  .side{background:#101a38;border:1px solid #42568c;border-radius:var(--radius);padding:17px 14px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+  .side-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #465786;padding-bottom:10px}
+  .side-head strong{color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:.075em}.side-head span{color:var(--muted);font-size:12px}
+  .ladder{display:flex;flex-direction:column;gap:4px}
+  .ladder-row{display:grid;grid-template-columns:25px 1fr;gap:5px;align-items:center;min-height:28px;padding:5px 10px;border-radius:7px;font-size:13px;color:#b0bfe4;font-variant-numeric:tabular-nums}
+  .ladder-row .amount{text-align:right;font-weight:820}
+  .ladder-row.safe{color:#ffe2a0;font-weight:850}
+  .ladder-row.active{background:#ffdb94;color:#1f2848;box-shadow:0 2px 10px #f7cd7850;font-weight:900}
+  .ladder-row.passed:not(.active){color:#91eac2}
+  .joker-head{border-top:1px solid #435786;padding-top:15px;font-size:12px;font-weight:850;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .joker-list{display:grid;gap:8px}
+  .joker{border:1px solid #6583bd;border-radius:11px;background:#263b69;color:white;text-align:left;padding:10px 12px;display:flex;align-items:center;gap:10px;font-weight:800;font-size:13px}
+  .joker:hover:not(:disabled){background:#3b568a}.joker:disabled{opacity:.38;text-decoration:line-through}
+  .joker .icon{background:#364b79;display:grid;place-items:center;font-size:16px;min-width:32px;height:32px;border-radius:9px;color:#ffe6b4}
+  .helper{font-size:12px;color:#aebcdb;line-height:1.45}
+  .notice{border:1px solid #607fb1;background:#1b3054;border-radius:12px;padding:12px 15px;font-size:14px;line-height:1.5;color:#f0f6ff;max-width:900px}
+  .notice strong{color:var(--gold)}
+  .onboard{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:18px;min-height:470px}
+  .medal{height:104px;width:104px;border-radius:50%;display:grid;place-items:center;font-size:55px;background:radial-gradient(circle,#665634,#28385b 75%);border:3px solid var(--gold);box-shadow:0 0 0 8px #fbd47d12,0 0 45px #ffcc7740}
+  .onboard h2{font-size:clamp(25px,3vw,40px);line-height:1.15}.onboard p{max-width:600px;color:#c4d1f3;line-height:1.6}
+  .mode-choice{width:min(100%,590px);display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mode-button{border:2px solid #5e74a3;background:#1b2b55;color:#e5edff;border-radius:14px;text-align:left;padding:14px;line-height:1.4;font-weight:800}
+  .mode-button span{display:block;font-size:12px;font-weight:500;color:#c4d0ed;margin-top:5px}
+  .mode-button.mode-active{border-color:var(--gold);background:#4f432e;color:#fff7e5}
+  .big-start{padding:15px 34px;font-size:17px}
+  .onboard .foot{color:#95a9cf;font-size:12px}
+  .progress-line{height:5px;background:#24335e;border-radius:99px;overflow:hidden}
+  .progress-line .bar{height:100%;width:0;background:linear-gradient(90deg,#6bdfe5,#ffe0a5);transition:width .25s}
+  .footer{color:#99a9cf;font-size:12px;text-align:center;padding:3px 0}
+  dialog{border:1px solid #7b93bf;border-radius:18px;background:#111e3d;color:#f9faff;padding:0;width:min(720px,calc(100% - 20px));max-height:86vh;box-shadow:0 20px 90px #000b}
+  dialog::backdrop{background:#030813d9;backdrop-filter:blur(4px)}
+  .dialog-inner{padding:22px;max-height:82vh;overflow-y:auto}
+  .dialog-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .dialog-title h2{font-size:21px}.dialog-content{font-size:14px;color:#e2ecff;line-height:1.5}
+  .solution-item{padding:12px 0;border-top:1px solid #42547d}.solution-item b{color:var(--gold)}.solution-item p{margin-top:4px}
+  .dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+  @media (max-width:1000px){.main{grid-template-columns:minmax(0,1fr) 215px}.shell{padding:14px}.side{padding:12px 9px}.ladder-row{font-size:12px}.answer{min-height:68px}}
+  @media (max-width:790px){.main{display:flex;flex-direction:column}.side{order:2}.ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.side-head{padding-bottom:7px}.stage{order:1}.question-panel{min-height:430px}.hero{min-height:120px}}
+  @media (max-width:520px){.answers,.mode-choice{grid-template-columns:1fr}.hero{padding:17px}.hero p{font-size:12px}.status{min-width:92px}.status-number{font-size:20px}.question-panel{padding:16px;gap:15px}.question-text{font-size:21px}.answer{min-height:57px;padding:11px;font-size:15px}.controls .primary,.controls .secondary{flex:1}.controls-right{width:100%}.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}.brandName{font-size:16px}.brandSub{font-size:10px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media print{body{background:white;color:black}.shell{display:none}dialog{position:static;width:100%;max-height:none;border:none;box-shadow:none;color:black;background:white}dialog::backdrop{display:none}.dialog-inner{max-height:none;overflow:visible}.dialog-actions,.dialog-title .small-button{display:none}.dialog-content,.solution-item b{color:black}.solution-item{break-inside:avoid;border-color:#aaa}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <div class="branding"><div class="emblem" aria-hidden="true"><span>?</span></div><div><div class="brandName">WER WIRD MATHE-MILLIONÄR?</div><div class="brandSub">Stochastik · Wiederholung Klasse 10</div></div></div>
+    <div class="header-actions"><button id="solutionsBtn" class="small-button" type="button">🔒 Lösungen für Lehrkräfte</button><button id="restartBtn" class="small-button" type="button">↻ Neustart</button></div>
+  </header>
+  <div class="main">
+    <main class="stage">
+      <section class="hero" aria-label="Spielstand"><div><div class="eyebrow" id="heroEyebrow">Die Quizshow zur Klassenarbeit</div><h1 id="heroTitle">15 Fragen. Drei Themen. Eine Million.</h1><p id="heroSub">Vierfeldertafel · Bedingte Wahrscheinlichkeit · Stochastische Unabhängigkeit</p></div><div class="status"><div class="status-label" id="statusLabel">Hauptgewinn</div><div class="status-number" id="statusValue">1.000.000 €</div><div class="status-secondary" id="statusSub">Bist du bereit?</div></div></section>
+      <div class="progress-line" aria-label="Spielfortschritt"><div class="bar" id="progressBar"></div></div>
+      <section class="question-panel" id="mainPanel" aria-live="polite"></section>
+      <div id="jokerNotice" class="notice" style="display:none" role="status"></div>
+    </main>
+    <aside class="side" aria-label="Gewinnleiter und Joker"><div class="side-head"><strong>Gewinnleiter</strong><span id="ladderCaption">15 Fragen</span></div><div class="ladder" id="ladder"></div><div class="joker-head">Deine Joker</div><div class="joker-list"><button class="joker" id="fiftyBtn" type="button" disabled><span class="icon">½</span> 50:50-Joker</button><button class="joker" id="classBtn" type="button" disabled><span class="icon">♟</span> Klassenjoker</button><button class="joker" id="expertBtn" type="button" disabled><span class="icon">✦</span> Expertenjoker</button></div><div class="helper">Jeden Joker kannst du einmal einsetzen. Der Klassenjoker gibt einen Denkanstoß für ein gemeinsames Gespräch.</div></aside>
+  </div>
+  <footer class="footer">Offline spielbar · Tastatur: 1–4 für Antworten, Enter zum Bestätigen oder Fortfahren · Keine Datenübertragung</footer>
+</div>
+<dialog id="solutionsDialog" aria-label="Lösungen für Lehrkräfte"><div class="dialog-inner"><div class="dialog-title"><h2>🗝️ Lösungsübersicht</h2><button type="button" class="small-button" id="closeDialogBtn">Schließen</button></div><div class="dialog-content" id="solutionsContent"></div><div class="dialog-actions"><button id="printBtn" class="secondary" type="button">Lösungsübersicht drucken</button><button id="closeDialogBottom" class="primary" type="button">Zurück zum Quiz</button></div></div></dialog>
+<script>
+"use strict";
+const prizes=[50,100,200,300,500,1000,2000,4000,8000,16000,32000,64000,125000,500000,1000000];
+const q=[
+ {topic:"Vierfeldertafel",question:"Wie viele Mädchen kommen mit dem Fahrrad zur Schule?",context:"Die Klasse hat ihre Schulwege gezählt.",table:{title:"Schulweg von 50 Jugendlichen",cols:["Fahrrad","Anders"],rows:[["Mädchen",12,8],["Jungen",18,12]]},options:["8","12","18","30"],correct:1,explanation:"Gesucht ist das Feld in der Zeile „Mädchen“ und der Spalte „Fahrrad“: 12.",classHint:"Sucht die passende Zeile und die passende Spalte. Wo schneiden sie sich?",expertHint:"In der Zelle „Mädchen ∩ Fahrrad“ steht die gesuchte absolute Häufigkeit."},
+ {topic:"Vierfeldertafel",question:"Wie viele Jugendliche kommen insgesamt nicht mit dem Fahrrad?",context:"Lies die Summe der passenden Spalte ab oder berechne sie.",table:{title:"Schulweg von 50 Jugendlichen",cols:["Fahrrad","Anders"],rows:[["Mädchen",14,11],["Jungen",16,9]]},options:["9","11","20","30"],correct:2,explanation:"In der Spalte „Anders“ stehen 11 und 9. Ihre Summe beträgt 20.",classHint:"Ihr braucht einen Randwert, nicht nur eine einzelne innere Zelle.",expertHint:"Addiere die beiden Einträge in der Spalte „Anders“: 11 + 9."},
+ {topic:"Vierfeldertafel",question:"Wie groß ist die Wahrscheinlichkeit, dass eine zufällig ausgewählte Person in der Lern-AG ist?",context:"Alle 50 Befragten sind gleich wahrscheinlich.",table:{title:"Teilnahme an einer Lern-AG",cols:["In Lern-AG","Nicht in AG"],rows:[["Mädchen",18,12],["Jungen",12,8]]},options:["30 %","40 %","50 %","60 %"],correct:3,explanation:"18 + 12 = 30 Personen sind in der Lern-AG. Daher gilt P(AG) = 30/50 = 60 %.",classHint:"Zählt zuerst alle AG-Mitglieder und teilt dann durch die Gesamtzahl.",expertHint:"Die günstigen Fälle sind 18 + 12 = 30, die möglichen Fälle 50."},
+ {topic:"Vierfeldertafel",question:"Wie groß ist P(Mädchen ∩ Mathe-Club)?",context:"Das Zeichen ∩ bedeutet: Beide Eigenschaften treffen gleichzeitig zu.",table:{title:"Mathe-Club an einer Schule",cols:["Im Club","Nicht im Club"],rows:[["Mädchen",18,22],["Jungen",10,30]]},options:["22,5 %","35 %","45 %","64,3 %"],correct:0,explanation:"18 der insgesamt 80 Jugendlichen sind Mädchen und im Mathe-Club. Also P(Mädchen ∩ Club) = 18/80 = 22,5 %.",classHint:"A ∩ B bedeutet „A und B“. Verwendet für eine unbedingte Wahrscheinlichkeit die Gesamtzahl.",expertHint:"Der Zähler ist 18 und der Nenner ist 18 + 22 + 10 + 30 = 80."},
+ {topic:"Vierfeldertafel",question:"Wie viele Jugendliche gehören zum Gegenereignis „fährt mit dem Bus“?",context:"Das Gegenereignis umfasst alle, die nicht mit dem Bus fahren.",table:{title:"Schulweg von 100 Jugendlichen",cols:["Mit Bus","Ohne Bus"],rows:[["Mädchen",24,16],["Jungen",36,24]]},options:["24","36","40","60"],correct:2,explanation:"Das Gegenereignis „ohne Bus“ umfasst 16 + 24 = 40 Jugendliche.",classHint:"Das Gegenereignis „nicht B“ umfasst alle Fälle, in denen B nicht eintritt.",expertHint:"Nutze die Spaltensumme „Ohne Bus“: 16 + 24."},
+ {topic:"Bedingte Wahrscheinlichkeit",question:"Wie groß ist P(AG | Mädchen), also die Wahrscheinlichkeit für AG-Teilnahme unter den Mädchen?",context:"Achte genau darauf, auf welche Gruppe die Bedingung einschränkt.",table:{title:"AG-Teilnahme von 60 Jugendlichen",cols:["In AG","Nicht in AG"],rows:[["Mädchen",12,18],["Jungen",18,12]]},options:["20 %","40 %","50 %","60 %"],correct:1,explanation:"„Gegeben Mädchen“ schränkt auf 30 Mädchen ein. Davon sind 12 in der AG: P(AG | Mädchen) = 12/30 = 40 %.",classHint:"Welche Gruppe steht hinter dem senkrechten Strich? Nur diese bildet den Nenner.",expertHint:"Es gibt 12 AG-Mädchen unter insgesamt 12 + 18 = 30 Mädchen."},
+ {topic:"Bedingte Wahrscheinlichkeit",question:"Wie groß ist P(Mädchen | AG), also der Mädchenanteil unter den AG-Mitgliedern?",context:"Vertauschte Bedingung, andere Bezugsgruppe – lies genau!",table:{title:"AG-Teilnahme von 50 Jugendlichen",cols:["In AG","Nicht in AG"],rows:[["Mädchen",12,18],["Jungen",8,12]]},options:["40 %","50 %","60 %","75 %"],correct:2,explanation:"„Gegeben AG“ bedeutet: Nur die 12 + 8 = 20 AG-Mitglieder zählen. 12 davon sind Mädchen, also P(Mädchen | AG) = 12/20 = 60 %. Zum Vergleich: P(AG | Mädchen) = 12/30 = 40 %.",classHint:"Die Reihenfolge bei bedingten Wahrscheinlichkeiten ist wichtig. Welche Gruppe ist bereits festgelegt?",expertHint:"Der Nenner ist die AG-Spaltensumme 12 + 8 = 20, nicht die Mädchen-Zeilensumme."},
+ {topic:"Bedingte Wahrscheinlichkeit",question:"Wie groß ist die Bestehenswahrscheinlichkeit unter den Jugendlichen, die mit Karteikarten gelernt haben?",context:"Untersucht wurden 120 Jugendliche vor einer Prüfung.",table:{title:"Lernmethode und Prüfungsergebnis",cols:["Bestanden","Nicht bestanden"],rows:[["Mit Karteikarten",54,18],["Ohne Karteikarten",24,24]]},options:["45 %","65 %","75 %","80 %"],correct:2,explanation:"Von den 54 + 18 = 72 Jugendlichen mit Karteikarten haben 54 bestanden. Somit gilt P(bestanden | Karteikarten) = 54/72 = 75 %.",classHint:"„Unter denen, die ...“ ist ein Hinweis auf bedingte Wahrscheinlichkeit.",expertHint:"54 erfolgreiche Personen bei insgesamt 72 Personen mit Karteikarten: 54 ÷ 72."},
+ {topic:"Bedingte Wahrscheinlichkeit",question:"Welche beiden Wahrscheinlichkeiten stimmen – zuerst P(Fußball | Schach), dann P(Schach | Fußball)?",context:"30 Personen spielen Schach, 60 Fußball. 18 Personen spielen beides.",options:["Beide 60 %","Erst 60 %, dann 30 %","Erst 30 %, dann 60 %","Beide 30 %"],correct:1,explanation:"P(Fußball | Schach) = 18/30 = 60 %. Dagegen gilt P(Schach | Fußball) = 18/60 = 30 %. Die beiden bedingten Wahrscheinlichkeiten sind nicht automatisch gleich.",classHint:"Für jede Wahrscheinlichkeit braucht ihr denselben Schnittmengen-Zähler, aber einen anderen Nenner.",expertHint:"Der Zähler ist zweimal 18; die Nenner sind zuerst 30 und dann 60."},
+ {topic:"Stochastische Unabhängigkeit",question:"Sind die Ereignisse A und B stochastisch unabhängig?",context:"Gegeben sind P(A) = 0,4, P(B) = 0,5 und P(A ∩ B) = 0,2.",options:["Abhängig, weil 0,4 ≠ 0,5","Unabhängig, weil 0,4 · 0,5 = 0,2","Unabhängig, weil 0,4 + 0,5 = 0,9","Mit diesen Angaben nicht entscheidbar"],correct:1,explanation:"Bei Unabhängigkeit muss P(A ∩ B) = P(A) · P(B) gelten. Hier ist 0,4 · 0,5 = 0,2. Die Ereignisse sind daher unabhängig.",classHint:"Vergleicht die Schnittmengenwahrscheinlichkeit mit dem Produkt der Einzelwahrscheinlichkeiten.",expertHint:"Die Prüfgleichung lautet: 0,2 = 0,4 · 0,5 ?"},
+ {topic:"Stochastische Unabhängigkeit",question:"Sind „Mädchen“ und „fährt Bus“ stochastisch unabhängig?",context:"Wähle die passende Begründung.",table:{title:"Schulweg von 100 Jugendlichen",cols:["Mit Bus","Ohne Bus"],rows:[["Mädchen",24,16],["Jungen",36,24]]},options:["Nein, denn 24 und 36 sind verschieden","Ja, denn 24 + 36 = 60","Nein, denn es gibt 40 Mädchen und 60 Jungen","Ja, denn 24/40 = 60/100"],correct:3,explanation:"Unter den Mädchen fahren 24/40 = 60 % Bus. Insgesamt fahren 60/100 = 60 % Bus. Die Wahrscheinlichkeit ändert sich durch die Bedingung „Mädchen“ nicht: unabhängig.",classHint:"Vergleicht P(Bus | Mädchen) und P(Bus). Sind beide gleich?",expertHint:"Busanteil der Mädchen: 24/40. Busanteil aller Jugendlichen: (24 + 36)/100."},
+ {topic:"Stochastische Unabhängigkeit",question:"A und B sind unabhängig. Wie groß ist P(A ∩ B)?",context:"Es gilt P(A) = 30 % und P(B) = 60 %.",options:["12 %","18 %","30 %","90 %"],correct:1,explanation:"Bei Unabhängigkeit wird multipliziert: 0,30 · 0,60 = 0,18 = 18 %.",classHint:"30 % und 60 % werden als Dezimalzahlen multipliziert – nicht addiert.",expertHint:"Berechne 0,3 · 0,6 und wandle anschließend in Prozent um."},
+ {topic:"Stochastische Unabhängigkeit",question:"P(A ∩ B) = 12 % und P(B) = 30 %. Wie groß muss P(A) für Unabhängigkeit sein?",context:"Nutze das Produktkriterium für unabhängige Ereignisse.",options:["12 %","30 %","40 %","60 %"],correct:2,explanation:"Unabhängigkeit fordert 0,12 = P(A) · 0,30. Division durch 0,30 liefert P(A) = 0,40 = 40 %.",classHint:"Stellt die Produktgleichung auf und löst sie nach P(A) auf.",expertHint:"Gesucht ist 0,12 ÷ 0,30."},
+ {topic:"Stochastische Unabhängigkeit",question:"Wie viele Mädchen müssen in der AG sein, damit „Mädchen“ und „in AG“ unabhängig sind?",context:"Von 200 Jugendlichen sind 90 Mädchen und insgesamt 80 in einer AG.",options:["32","36","40","45"],correct:1,explanation:"Bei Unabhängigkeit gilt P(Mädchen ∩ AG) = (90/200) · (80/200) = 0,18. Von 200 Jugendlichen sind das 0,18 · 200 = 36 Mädchen in der AG.",classHint:"Der Mädchenanteil in der AG müsste genauso groß sein wie in der gesamten Gruppe.",expertHint:"45 % aller 80 AG-Mitglieder müssten Mädchen sein: 0,45 · 80."},
+ {topic:"Finalfrage · Alles kombiniert",question:"Wie groß ist P(bestanden) – und sind „Lern-App“ und „bestanden“ unabhängig?",context:"Von 100 Jugendlichen nutzen 60 eine Lern-App; 48 davon bestehen. Von den 40 ohne Lern-App bestehen 20.",options:["68 %, abhängig","68 %, unabhängig","80 %, abhängig","62 %, abhängig"],correct:0,explanation:"Bestanden haben 48 + 20 = 68 von 100, also 68 %. Unter den App-Nutzenden bestehen 48/60 = 80 %. Da P(bestanden | App) = 80 % nicht mit P(bestanden) = 68 % übereinstimmt, sind die Ereignisse abhängig.",classHint:"Ermittelt zuerst die Gesamtzahl der bestandenen Prüfungen. Vergleicht dann den Anteil der Bestehenden mit und ohne Bedingung.",expertHint:"P(bestanden) = (48 + 20)/100. Prüfe anschließend: Ist das gleich P(bestanden | App) = 48/60?"}
+];
+const fmt=n=>new Intl.NumberFormat('de-DE').format(n)+' €';
+const $=id=>document.getElementById(id);
+const s={phase:'intro',mode:'practice',index:0,selected:null,locked:false,hidden:[],used:{fifty:false,class:false,expert:false},notice:'',correct:0,answered:0,safe:0,stopReason:'',lastGood:0};
+function safeText(v){return String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;')}
+function tableHTML(t){if(!t)return '';const c=t.rows.reduce((a,r)=>a.map((x,i)=>x+r[i+1]),[0,0]);const r=t.rows.map(row=>`<tr><th scope="row">${safeText(row[0])}</th><td class="inner">${row[1]}</td><td class="inner">${row[2]}</td><td class="total">${row[1]+row[2]}</td></tr>`).join('');return `<div class="tablebox"><div class="table-title">${safeText(t.title)}</div><table class="prob"><thead><tr><th scope="col"></th><th scope="col">${safeText(t.cols[0])}</th><th scope="col">${safeText(t.cols[1])}</th><th scope="col">Gesamt</th></tr></thead><tbody>${r}<tr class="total"><th scope="row">Gesamt</th><td>${c[0]}</td><td>${c[1]}</td><td>${c[0]+c[1]}</td></tr></tbody></table></div>`}
+function renderLadder(){let html='';for(let i=14;i>=0;i--){const active=s.phase==='playing'&&s.index===i,passed=(s.phase!=='intro'&&s.index>i&&s.lastGood>=i+1),safe=i===4||i===9||i===14;html+=`<div class="ladder-row ${active?'active':''} ${passed?'passed':''} ${safe?'safe':''}" ${active?'aria-current="step"':''}><span>${i+1}</span><span class="amount">${fmt(prizes[i])}${safe?' ★':''}</span></div>`} $('ladder').innerHTML=html;$('ladderCaption').textContent=s.phase==='intro'?'15 Fragen':`${s.correct} richtig`}
+function renderJokers(){const playable=s.phase==='playing'&&!s.locked;for(const [key,id] of [['fifty','fiftyBtn'],['class','classBtn'],['expert','expertBtn']]){$(id).disabled=!playable||s.used[key];$(id).setAttribute('aria-label',key==='fifty'?'50:50 Joker':key==='class'?'Klassenjoker':'Expertenjoker')}
+const el=$('jokerNotice');el.style.display=s.notice?'block':'none';if(s.notice)el.innerHTML=s.notice}
+function hero(title,sub,eyebrow,value,label,other){$('heroTitle').textContent=title;$('heroSub').textContent=sub;$('heroEyebrow').textContent=eyebrow;$('statusValue').textContent=value;$('statusLabel').textContent=label;$('statusSub').textContent=other}
+function render(){renderLadder();renderJokers();$('progressBar').style.width=(s.phase==='intro'?0:s.phase==='end'?100:(s.index/15)*100)+'%';if(s.phase==='intro'){hero('15 Fragen. Drei Themen. Eine Million.','Vierfeldertafel · Bedingte Wahrscheinlichkeit · Stochastische Unabhängigkeit','Die Quizshow zur Klassenarbeit','1.000.000 €','Hauptgewinn','Bist du bereit?');$('mainPanel').innerHTML=`<div class="onboard"><div class="medal" aria-hidden="true">★</div><h2>Wer knackt die Mathe-Million?</h2><p>15 Fragen mit vier Antwortmöglichkeiten, drei einmaligen Jokern und nachvollziehbaren Lösungen. Ideal für die gemeinsame Wiederholung vor der Klassenarbeit.</p><div class="mode-choice"><button class="mode-button ${s.mode==='practice'?'mode-active':''}" data-mode="practice" aria-pressed="${s.mode==='practice'}">🎓 Übungsmodus<span>Alle 15 Fragen spielen, auch nach Fehlern. Empfohlen für den Unterricht.</span></button><button class="mode-button ${s.mode==='show'?'mode-active':''}" data-mode="show" aria-pressed="${s.mode==='show'}">🏆 Quizshow-Modus<span>Eine falsche Antwort beendet die Runde. Sicherheitsstufen: 500 € und 16.000 €.</span></button></div><button class="primary big-start" id="startGameBtn">Spiel starten</button><div class="foot">Alle Aufgaben und Erklärungen sind in dieser HTML-Datei enthalten. Keine Internetverbindung nötig.</div></div>`;document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{s.mode=b.dataset.mode;render()}));$('startGameBtn').addEventListener('click',start);return}
+if(s.phase==='end'){const won=s.mode==='show'?s.stopReason==='win'?fmt(1000000):s.stopReason==='wrong'?fmt(s.safe):fmt(s.lastGood?prizes[s.lastGood-1]:0):null;hero('Die Runde ist vorbei!','Du kannst jederzeit neu starten und alle Aufgaben erneut üben.','Ergebnis',s.correct+' / 15','Richtige Antworten',won?`Gewinn: ${won}`:'Wiederholung geschafft');$('mainPanel').innerHTML=`<div class="onboard"><div class="medal" aria-hidden="true">${s.stopReason==='win'||s.correct===15?'🏆':'★'}</div><h2>${s.stopReason==='win'?'Mathe-Million geknackt!':s.stopReason==='wrong'?'Die Quizshow ist beendet.':'Alle Fragen geschafft!'}</h2><p>${s.mode==='show'?`Deine erspielte Sicherheitsstufe: <strong>${safeText(won)}</strong>. `:''}Du hast <strong>${s.correct} von ${s.answered} beantworteten Fragen</strong> richtig gelöst. Nutze die Erklärungen, um Unsicherheiten gezielt zu wiederholen.</p><button class="primary big-start" id="againBtn">Noch einmal spielen</button><button class="secondary" id="reviewBtn">Lösungsübersicht ansehen</button></div>`;$('againBtn').addEventListener('click',reset);$('reviewBtn').addEventListener('click',showSolutions);return}
+const item=q[s.index],locked=s.locked;hero(`Frage ${s.index+1} von 15`,item.question,`${item.topic} · ${s.mode==='practice'?'Übungsmodus':'Quizshow-Modus'}`,fmt(prizes[s.index]),'Es geht um',`${s.correct} richtig · ${s.answered} beantwortet`);
+const answers=item.options.map((a,i)=>{let cls='answer';if(s.hidden.includes(i)&&!locked)cls+=' hidden-answer';if(s.selected===i&&!locked)cls+=' selected';if(locked&&i===item.correct)cls+=' correct';else if(locked&&s.selected===i)cls+=' wrong';return `<button type="button" data-answer="${i}" class="${cls}" ${locked||s.hidden.includes(i)?'disabled':''} aria-pressed="${s.selected===i}"><span class="answer-letter">${'ABCD'[i]}:</span><span class="answer-content">${safeText(a)}</span></button>`}).join('');
+let feed='';if(locked){let right=s.selected===item.correct;feed=`<div class="feedback ${right?'good':'bad'}" role="status"><h2>${right?'✓ Richtig!':'✕ Leider nicht richtig.'} ${right?'':`Richtige Antwort: ${'ABCD'[item.correct]} · ${safeText(item.options[item.correct])}`}</h2><p>${safeText(item.explanation)}</p></div>`}
+const action=locked?`<button class="primary" id="nextBtn">${s.mode==='show'&&s.selected!==item.correct?'Zum Ergebnis':s.index===14?'Ergebnis ansehen':'Nächste Frage →'}</button>`:`<button class="primary" id="lockBtn" ${s.selected===null?'disabled':''}>Antwort einloggen ✓</button>`;
+$('mainPanel').innerHTML=`<div class="panel-top"><span class="chip">${safeText(item.topic)}</span><span class="step">FRAGE ${s.index+1} / 15 · ${fmt(prizes[s.index])}</span></div><div class="question-text">${safeText(item.question)}</div>${item.context?`<p class="scenario">${safeText(item.context)}</p>`:''}${tableHTML(item.table)}<div class="answers" role="group" aria-label="Vier Antwortmöglichkeiten">${answers}</div>${feed}<div class="controls"><span class="helper">${locked?'Lies die Erklärung und besprecht den Lösungsweg.':'Wähle A, B, C oder D. Erst dann einloggen.'}</span><div class="controls-right">${action}</div></div>`;
+if(!locked){document.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{s.selected=Number(b.dataset.answer);render()}));$('lockBtn').addEventListener('click',lockAnswer)}else{$('nextBtn').addEventListener('click',next)}
+}
+function start(){s.phase='playing';s.index=0;s.selected=null;s.locked=false;s.hidden=[];s.used={fifty:false,class:false,expert:false};s.notice='';s.correct=0;s.answered=0;s.safe=0;s.stopReason='';s.lastGood=0;render()}
+function reset(){s.phase='intro';s.notice='';s.index=0;s.selected=null;s.hidden=[];s.locked=false;s.answered=0;s.correct=0;s.lastGood=0;render()}
+function lockAnswer(){if(s.phase!=='playing'||s.locked||s.selected===null)return;s.locked=true;s.answered++;if(s.selected===q[s.index].correct){s.correct++;s.lastGood=s.index+1;if(s.mode==='show'&&s.index===4)s.safe=500;if(s.mode==='show'&&s.index===9)s.safe=16000} s.notice='';render()}
+function next(){if(s.phase!=='playing'||!s.locked)return;if(s.mode==='show'&&s.selected!==q[s.index].correct){s.stopReason='wrong';s.phase='end'}else if(s.index===14){s.stopReason=(s.correct===15?'win':'complete');s.phase='end'}else{s.index++;s.selected=null;s.locked=false;s.hidden=[];s.notice=''}render()}
+function useJoker(kind){if(s.phase!=='playing'||s.locked||s.used[kind])return;const item=q[s.index];s.used[kind]=true;if(kind==='fifty'){const wrong=[0,1,2,3].filter(i=>i!==item.correct);if(s.selected!==null&&s.selected!==item.correct){const others=wrong.filter(i=>i!==s.selected);s.hidden=others.slice(0,2)}else{s.hidden=wrong.slice(0,2)}s.notice='<strong>50:50-Joker:</strong> Zwei falsche Antworten sind ausgeblendet.'}else if(kind==='class'){s.notice=`<strong>Klassenjoker · 30 Sekunden Beratung:</strong> ${safeText(item.classHint)}`}else{s.notice=`<strong>Expertenjoker · Tipp:</strong> ${safeText(item.expertHint)}`}render()}
+function showSolutions(){const items=q.map((item,i)=>`<div class="solution-item"><b>Frage ${i+1} · ${fmt(prizes[i])} · ${safeText(item.topic)}</b><p>${safeText(item.question)}</p><p><strong>Richtig: ${'ABCD'[item.correct]} – ${safeText(item.options[item.correct])}</strong></p><p>${safeText(item.explanation)}</p></div>`).join('');$('solutionsContent').innerHTML='<p>Diese Übersicht ist für die Lehrkraft gedacht und enthält sämtliche Antworten und Lösungswege.</p>'+items;$('solutionsDialog').showModal()}
+$('fiftyBtn').addEventListener('click',()=>useJoker('fifty'));
+$('classBtn').addEventListener('click',()=>useJoker('class'));
+$('expertBtn').addEventListener('click',()=>useJoker('expert'));
+$('solutionsBtn').addEventListener('click',showSolutions);
+$('restartBtn').addEventListener('click',()=>{if(s.phase==='intro'||confirm('Möchtest du das aktuelle Spiel wirklich neu starten?'))reset()});
+$('closeDialogBtn').addEventListener('click',()=>$('solutionsDialog').close());
+$('closeDialogBottom').addEventListener('click',()=>$('solutionsDialog').close());
+$('printBtn').addEventListener('click',()=>window.print());
+$('solutionsDialog').addEventListener('click',ev=>{if(ev.target===$('solutionsDialog'))$('solutionsDialog').close()});
+document.addEventListener('keydown',ev=>{if($('solutionsDialog').open||ev.altKey||ev.ctrlKey||ev.metaKey)return;if(s.phase!=='playing')return;if(!s.locked&&['1','2','3','4'].includes(ev.key)){let index=Number(ev.key)-1;if(!s.hidden.includes(index)){s.selected=index;render()}}else if(ev.key==='Enter'){ev.preventDefault();s.locked?next():lockAnswer()}});
+// Internal consistency checks make editing question data safer.
+console.assert(q.length===15&&prizes.length===15,'Es müssen genau 15 Fragen vorhanden sein.');
+console.assert(q.every(item=>item.options.length===4&&item.correct>=0&&item.correct<4),'Jede Frage braucht 4 Antwortoptionen.');
+render();
+</script>
+</body>
+</html>
